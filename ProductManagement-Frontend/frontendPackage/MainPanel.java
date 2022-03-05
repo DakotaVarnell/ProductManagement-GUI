@@ -6,18 +6,23 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import project1package.Product;
 import project1package.ProductCollection;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.JTextArea;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JTextField;
 
 public class MainPanel extends JPanel{
 	private int count;
@@ -29,6 +34,11 @@ public class MainPanel extends JPanel{
 	public MainPanel() {
 		setBackground(new Color(0, 0, 139));
 		setLayout(null);
+		
+		//Initialize our product collection with the text file and read all the data in
+		myStore = new ProductCollection("./inventoryTest.txt");
+		myStore.toRead();
+		System.out.println(myStore);
 		
 		//1  Adds the main title label to our music store GUI
 		JLabel lblMusicStore = new JLabel("5th Avenue Music");
@@ -42,13 +52,14 @@ public class MainPanel extends JPanel{
 		//2  Adds the categories combo box to our GUI
 		JComboBox categories = new JComboBox();
 		categories.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		categories.setModel(new DefaultComboBoxModel(new String[] {"Categories"}));
+		categories.setModel(new DefaultComboBoxModel(myStore.getCategories().toArray()));
 		categories.setBounds(207, 86, 385, 22);
 		add(categories);
 		
-		//3  Adds the current inventory textarea to our GUI
-		JTextArea inventory = new JTextArea();
-		inventory.setBounds(207, 261, 385, 99);
+		//Adds our entire inventory in a list
+		JTextField inventory = new JTextField();
+		inventory.setBounds(207, 261, 385, 70);
+		inventory.setEditable(false);
 		add(inventory);
 		
 		//4 adds the add, remove, and update inventory buttons to our GUI
@@ -72,23 +83,23 @@ public class MainPanel extends JPanel{
 		JTextArea current = new JTextArea();
 		current.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		current.setText("Current Inventory");
+		current.setEditable(false);
 		current.setBounds(207, 226, 385, 35);
 		add(current);
 		
-		//Adds a drop down combo box we are gonna populate with each category
-//		JComboBox comboBox = new JComboBox();
-//		ArrayList<String> categories = myStore.getCategories();
-//		comboBox.setModel(new DefaultComboBoxModel(categories.toArray()));
-//		setBounds(130, 105, 375, 22);
-//		add(comboBox);
+		//Action Listener to show the selected items under a certain category
+		JButton btnShowItem = new JButton("Show Items");
+		btnShowItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProductCollection prods = myStore.retrieveCollection((String)categories.getSelectedItem());
+				inventory.setText(prods.toString()+ "\n");
+			}
+		});
+		btnShowItem.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		btnShowItem.setBounds(207, 132, 115, 23);
+		add(btnShowItem);
 		
-		//Initialize our product collection with the text file and read all the data in
-		myStore = new ProductCollection("./inventoryTest.txt");
-		myStore.toRead();
-		System.out.println(myStore);
-		
-		//JTextArea text = new JTextArea();
-		//text.setText(myStore.toString());
+
 		
 
 	}

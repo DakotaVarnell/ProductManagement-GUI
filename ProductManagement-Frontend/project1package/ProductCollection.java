@@ -84,7 +84,14 @@ public class ProductCollection {
 		{
 			temp = iter.next();
 			
-			toReturn.add(temp.getInstrType());
+			if(toReturn.contains(temp.getInstrType()))
+			{
+				
+			}
+			else {
+				toReturn.add(temp.getInstrType());
+			}
+			
 			
 		}
 
