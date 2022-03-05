@@ -15,6 +15,7 @@ public class MainFrame {
 
 		frame.getContentPane().add(myPanel);
 		frame.setResizable(false);
+		
 		//frame.pack();
 		frame.setVisible(true);
 		frame.addWindowListener(new WindowAdapter() {

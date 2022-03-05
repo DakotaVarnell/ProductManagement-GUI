@@ -100,8 +100,8 @@ public class ProductCollection {
 		
 	}
 	
-	//Update quantity of certain product by using inputted id as if one had been bought
-	public Product updateStatus(String id)
+	//Update quantity of certain product by using inputted id as if an amount had been bought
+	public Product increaseStatus(String id, int num)
 	{
 		//Iterator to traverse the collection
 		Iterator <Product> iter = products.iterator();
@@ -114,19 +114,41 @@ public class ProductCollection {
 			if(toReturn.getId().equals(id))
 			{
 				//Decrement quantity by 1 of product
-				toReturn.setQuantity(toReturn.getQuantity()-1);
+				toReturn.setQuantity(toReturn.getQuantity()+num);
 			}
 		}
 		
 		return toReturn;
 	}
 	
+	
+	//Update quantity of certain product by using inputted id as if a number had been sold
+		public Product decreaseStatus(String id, int num)
+		{
+			//Iterator to traverse the collection
+			Iterator <Product> iter = products.iterator();
+			Product toReturn = new Product();
+			
+			while(iter.hasNext())
+			{
+				toReturn = iter.next();
+				
+				if(toReturn.getId().equals(id))
+				{
+					//Decrement quantity by 1 of product
+					toReturn.setQuantity(toReturn.getQuantity()-num);
+				}
+			}
+			
+			return toReturn;
+		}
+	
 	//Return a collection of products by the type of instrument
-	public ProductCollection retrieveCollection(String type)
+	public ArrayList <Product> retrieveCollection(String type)
 	{
 		//Iterator to traverse the collection
 		Iterator<Product> iter = products.iterator();
-		ProductCollection toReturn = new ProductCollection();
+		ArrayList <Product> toReturn = new ArrayList <Product>();
 		Product temp = new Product();
 		
 		while(iter.hasNext())
@@ -137,12 +159,30 @@ public class ProductCollection {
 			//Like a category
 			if(temp.getInstrType().equals(type))
 			{
-				toReturn.addInstrument(temp);
+				toReturn.add(temp);
 			}
 		}
 		
 		return toReturn;
 	}
+	
+	
+	//Return the entire data file as an arraylist
+		public ArrayList <Product> toArrayList()
+		{
+			//Iterator to traverse the collection
+			Iterator<Product> iter = products.iterator();
+			ArrayList <Product> toReturn = new ArrayList <Product>();
+			Product temp = new Product();
+			
+			while(iter.hasNext())
+			{
+				temp = iter.next();
+				toReturn.add(temp);
+			}
+			
+			return toReturn;
+		}
 	
 	//delete an entire product as if it wasn't sold anymore
 	public void deleteProduct(String id)
