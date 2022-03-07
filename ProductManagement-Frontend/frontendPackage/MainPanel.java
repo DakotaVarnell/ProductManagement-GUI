@@ -85,6 +85,7 @@ public class MainPanel extends JPanel{
 		progressBar.setMaximum(400);
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setBackground(Color.WHITE);
+		//if the quantity of the total inventory reaches max, change progress bar to red
 		progressBar.setValue(myStore.getInventorySize());
 		if(progressBar.getValue() == progressBar.getMaximum()) {
 			progressBar.setForeground(Color.RED);
@@ -205,6 +206,7 @@ public class MainPanel extends JPanel{
 		guitarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(guitarBtn.isSelected()) {
+					//Have to init a new product for input but change instrType to function properly
 					Product p = new Product("12","Stratocaster","Fender",600.0,"Guitar",14,"file location");
 					ArrayList <Product> prods = myStore.suggestCollection(p);
 					
@@ -231,6 +233,7 @@ public class MainPanel extends JPanel{
 		ampButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(ampButton.isSelected()) {
+					//Have to init a new product for input but change instrType to function properly
 					Product p = new Product("12","Stratocaster","Fender",600.0,"Amp",14,"file location");
 					ArrayList <Product> prods = myStore.suggestCollection(p);
 					
@@ -258,6 +261,7 @@ public class MainPanel extends JPanel{
 		pedalButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(pedalButton.isSelected()) {
+					//Have to init a new product for input but change instrType to function properly
 					Product p = new Product("12","Stratocaster","Fender",600.0,"Pedal",14,"file location");
 					ArrayList <Product> prods = myStore.suggestCollection(p);
 					
