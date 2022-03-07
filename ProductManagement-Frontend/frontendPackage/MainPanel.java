@@ -1,3 +1,8 @@
+//Dakota Varnell
+//OOP with Java
+//Project 2
+
+
 package frontendPackage;
 
 import java.awt.Color;
@@ -25,6 +30,15 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JEditorPane;
+import javax.swing.JSlider;
+import javax.swing.JMenuBar;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JCheckBox;
 
 public class MainPanel extends JPanel{
 	private int count;
@@ -32,6 +46,8 @@ public class MainPanel extends JPanel{
 	private JLabel lblPushes;
 	private ProductCollection myStore;
 	private ImageIcon icon;
+	private JTextField txtSuggestProduct;
+	private JTextField txtMaxInventory;
 	
 
 	public MainPanel() {
@@ -160,8 +176,120 @@ public class MainPanel extends JPanel{
 		JLabel picture;
 		icon = new ImageIcon("guitarlogo.png");
 		picture = new JLabel(icon);
-		picture.setBounds(627, 11, 150, 157);
+		picture.setBounds(20, 66, 150, 157);
 		add(picture);
+		
+		JRadioButton guitarBtn = new JRadioButton("Guitar");
+		guitarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(guitarBtn.isSelected()) {
+					Product p = new Product("12","Stratocaster","Fender",600.0,"Guitar",14,"file location");
+					ArrayList <Product> prods = myStore.suggestCollection(p);
+					
+					String str = "";
+
+					for (Product prod : prods) {
+						str += prod + "\n";
+					}
+					
+					
+					inventory.setText(str);
+				}
+				
+			}
+		});
+		guitarBtn.setBackground(Color.WHITE);
+		guitarBtn.setBounds(627, 255, 111, 28);
+		add(guitarBtn);
+		
+		JRadioButton ampButton = new JRadioButton("Amp");
+		ampButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(ampButton.isSelected()) {
+					Product p = new Product("12","Stratocaster","Fender",600.0,"Amp",14,"file location");
+					ArrayList <Product> prods = myStore.suggestCollection(p);
+					
+					String str = "";
+
+					for (Product prod : prods) {
+						str += prod + "\n";
+					}
+					
+					
+					inventory.setText(str);
+				}
+				
+			
+			}
+		});
+		
+		ampButton.setBackground(Color.WHITE);
+		ampButton.setBounds(627, 274, 111, 28);
+		add(ampButton);
+		
+		JRadioButton pedalButton = new JRadioButton("Pedal");
+		pedalButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(pedalButton.isSelected()) {
+					Product p = new Product("12","Stratocaster","Fender",600.0,"Pedal",14,"file location");
+					ArrayList <Product> prods = myStore.suggestCollection(p);
+					
+					String str = "";
+
+					for (Product prod : prods) {
+						str += prod + "\n";
+					}
+					
+					
+					inventory.setText(str);
+				}
+				
+			}
+			
+		});
+		pedalButton.setBackground(Color.WHITE);
+		pedalButton.setBounds(627, 296, 111, 28);
+		add(pedalButton);
+		
+		txtSuggestProduct = new JTextField();
+		txtSuggestProduct.setBackground(Color.WHITE);
+		txtSuggestProduct.setText("Suggest Product");
+		txtSuggestProduct.setBounds(627, 232, 111, 25);
+		add(txtSuggestProduct);
+		txtSuggestProduct.setColumns(10);
+		
+		JCheckBox HidePhoto = new JCheckBox("Hide Photo");
+		HidePhoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(HidePhoto.isSelected()) {
+					picture.setVisible(false);
+				}
+				else {
+					picture.setVisible(true);
+				}
+			}
+		});
+		HidePhoto.setBounds(20, 50, 98, 20);
+		add(HidePhoto);
+		
+
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setMaximum(400);
+		progressBar.setForeground(Color.GREEN);
+		progressBar.setBackground(Color.WHITE);
+		if(progressBar.getValue() == progressBar.getMaximum()) {
+			progressBar.setForeground(Color.RED);
+		}
+		progressBar.setBounds(207, 201, 385, 30);
+		add(progressBar);
+		
+		txtMaxInventory = new JTextField();
+		txtMaxInventory.setText("Max Inventory");
+		txtMaxInventory.setColumns(10);
+		txtMaxInventory.setBackground(new Color(255, 255, 255));
+		txtMaxInventory.setBounds(513, 180, 79, 25);
+		add(txtMaxInventory);
 		
 
 		

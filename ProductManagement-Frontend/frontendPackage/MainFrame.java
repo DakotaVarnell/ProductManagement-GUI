@@ -1,3 +1,7 @@
+//Dakota Varnell
+//OOP with Java
+//Project 2
+
 package frontendPackage;
 
 import java.awt.event.WindowAdapter;

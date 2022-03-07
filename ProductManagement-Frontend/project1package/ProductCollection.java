@@ -202,14 +202,32 @@ public class ProductCollection {
 				}
 		}
 	}
+	
+	//Gets the total number of inventory items
+	public int getInventorySize()
+	{
+		//Iterator to traverse the collection
+		Iterator <Product> iter = products.iterator();
+		Product p = new Product();
+		int inventory = 0;
+		
+		while(iter.hasNext())
+		{
+			p = iter.next();
+			
+			inventory += p.getQuantity();
+		}
+		
+		return inventory;
+	}
 
 	
 	//When the instrument or accessory is being bought, suggest a collection that they may also be interested in
-	public ProductCollection suggestCollection(Product p)
+	public ArrayList <Product> suggestCollection(Product p)
 	{
 		//Iterator to traverse the collection
 		Iterator<Product> iter = products.iterator();
-		ProductCollection toSuggest = new ProductCollection();
+		ArrayList <Product> toSuggest = new ArrayList <Product>();
 		Product temp = new Product();
 		
 		//Title Prompt to tell them what they are looking at
@@ -226,7 +244,7 @@ public class ProductCollection {
 				
 				if(temp.getInstrType().equals("Picks") || temp.getInstrType().equals("Strings"))
 				{
-					toSuggest.addInstrument(temp);
+					toSuggest.add(temp);
 				}
 			}
 		}
@@ -239,7 +257,7 @@ public class ProductCollection {
 				
 				if(temp.getInstrType().equals("Cable") || temp.getInstrType().equals("Pedal"))
 				{
-					toSuggest.addInstrument(temp);
+					toSuggest.add(temp);
 				}
 			}
 		}
@@ -252,7 +270,7 @@ public class ProductCollection {
 				
 				if(temp.getInstrType().equals("Drum Sticks"))
 				{
-					toSuggest.addInstrument(temp);
+					toSuggest.add(temp);
 				}
 			}
 		}
@@ -265,7 +283,7 @@ public class ProductCollection {
 				
 				if(temp.getInstrType().equals("Reeds"))
 				{
-					toSuggest.addInstrument(temp);
+					toSuggest.add(temp);
 				}
 			}
 		}
@@ -278,7 +296,7 @@ public class ProductCollection {
 				
 				if(temp.getInstrType().equals("Metronome") || temp.getInstrType().equals("Stand"))
 				{
-					toSuggest.addInstrument(temp);
+					toSuggest.add(temp);
 				}
 			}
 		}
