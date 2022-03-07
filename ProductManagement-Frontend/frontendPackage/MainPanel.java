@@ -49,7 +49,7 @@ public class MainPanel extends JPanel{
 	private JTextField txtSuggestProduct;
 	private JTextField txtMaxInventory;
 	
-
+	//Our mainpanel constructor
 	public MainPanel() {
 		setBackground(new Color(0, 0, 139));
 		setLayout(null);
@@ -57,7 +57,7 @@ public class MainPanel extends JPanel{
 		//Initialize our product collection with the text file and read all the data in
 		myStore = new ProductCollection("./inventoryTest.txt");
 		myStore.toRead();
-		System.out.println(myStore);
+		//System.out.println(myStore);
 		
 		//1  Adds the main title label to our music store GUI
 		JLabel lblMusicStore = new JLabel("5th Avenue Music");
@@ -75,22 +75,38 @@ public class MainPanel extends JPanel{
 		categories.setBounds(207, 86, 385, 22);
 		add(categories);
 		
-		//Adds our entire inventory in a list
-		JTextArea inventory = new JTextArea();
-		inventory.setBounds(207, 261, 385, 99);
-		inventory.setEditable(false);
-		add(inventory);
+		//Scroll pane for our inventory textArea
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(207, 261, 385, 99);
+		add(scrollPane);
 		
-		//4 adds the add, remove, and update inventory buttons to our GUI
+		//3 This progress bar will update as the inventory increases or decreases, if the inventory is full(total quantity 400) it will turn red
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setMaximum(400);
+		progressBar.setForeground(Color.GREEN);
+		progressBar.setBackground(Color.WHITE);
+		progressBar.setValue(myStore.getInventorySize());
+		if(progressBar.getValue() == progressBar.getMaximum()) {
+			progressBar.setForeground(Color.RED);
+			}
+		progressBar.setBounds(207, 201, 385, 30);
+		add(progressBar);
+		
+		//4 Adds our entire inventory in a text area
+		JTextArea inventory = new JTextArea();
+		scrollPane.setViewportView(inventory);
+		inventory.setEditable(false);
+		
+		//5 adds the add inventory button to our GUI
 		JButton addInventory = new JButton("Add");
 		addInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String s = JOptionPane.showInputDialog("How many would you like to add? ");
 				int quantityIncrease = Integer.parseInt(s);
-				System.out.println(inventory.getSelectedText());
+				//System.out.println(inventory.getSelectedText());
 				Product id = myStore.findInstrument(inventory.getSelectedText());
 				myStore.increaseStatus(id.getId(), quantityIncrease);
-				System.out.println(id);
+				//System.out.println(id);
 				myStore.toWrite();
 				
 			}
@@ -106,10 +122,10 @@ public class MainPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				String s = JOptionPane.showInputDialog("How many would you like to remove? ");
 				int quantityDecrease = Integer.parseInt(s);
-				System.out.println(inventory.getSelectedText());
+				//System.out.println(inventory.getSelectedText());
 				Product id = myStore.findInstrument(inventory.getSelectedText());
 				myStore.decreaseStatus(id.getId(), quantityDecrease);
-				System.out.println(id);
+				//System.out.println(id);
 				myStore.toWrite();
 			}
 		});
@@ -133,6 +149,8 @@ public class MainPanel extends JPanel{
 				}
 				
 				myStore.toWrite();
+				
+				progressBar.setValue(myStore.getInventorySize());
 				inventory.setText(str);
 				
 				
@@ -143,7 +161,8 @@ public class MainPanel extends JPanel{
 		add(updateInventory);
 		
 		
-		//Adds the current inventory text area to our GUI to show what the text below is
+		
+		//Adds the "current inventory" text area to our GUI to show what the text below is showing us
 		JTextArea current = new JTextArea();
 		current.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		current.setText("Current Inventory(Highlight ID's to edit)");
@@ -165,6 +184,7 @@ public class MainPanel extends JPanel{
 				
 				
 				inventory.setText(str);
+				
 			}
 		});
 		btnShowItem.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -172,13 +192,15 @@ public class MainPanel extends JPanel{
 		add(btnShowItem);
 		
 		
-		//Displays our picture/logo on the screen
+		//6 Displays our picture/logo on the screen
 		JLabel picture;
 		icon = new ImageIcon("guitarlogo.png");
 		picture = new JLabel(icon);
 		picture.setBounds(20, 66, 150, 157);
 		add(picture);
 		
+		
+		//7 This button will suggest products related to guitars in the inventory text area
 		JRadioButton guitarBtn = new JRadioButton("Guitar");
 		guitarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -202,6 +224,9 @@ public class MainPanel extends JPanel{
 		guitarBtn.setBounds(627, 255, 111, 28);
 		add(guitarBtn);
 		
+		
+		
+		//This button will suggest products related to amps in the inventory text area
 		JRadioButton ampButton = new JRadioButton("Amp");
 		ampButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -227,6 +252,8 @@ public class MainPanel extends JPanel{
 		ampButton.setBounds(627, 274, 111, 28);
 		add(ampButton);
 		
+		
+		//This button will suggest products related to pedals in the inventory text area
 		JRadioButton pedalButton = new JRadioButton("Pedal");
 		pedalButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -258,6 +285,8 @@ public class MainPanel extends JPanel{
 		add(txtSuggestProduct);
 		txtSuggestProduct.setColumns(10);
 		
+		
+		//8 This checkbox will set the photo for our logo to not visible and hide the photo
 		JCheckBox HidePhoto = new JCheckBox("Hide Photo");
 		HidePhoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -274,16 +303,9 @@ public class MainPanel extends JPanel{
 		
 
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setMaximum(400);
-		progressBar.setForeground(Color.GREEN);
-		progressBar.setBackground(Color.WHITE);
-		if(progressBar.getValue() == progressBar.getMaximum()) {
-			progressBar.setForeground(Color.RED);
-		}
-		progressBar.setBounds(207, 201, 385, 30);
-		add(progressBar);
 		
+		
+		//Just a label that titles our max inventory limit
 		txtMaxInventory = new JTextField();
 		txtMaxInventory.setText("Max Inventory");
 		txtMaxInventory.setColumns(10);
